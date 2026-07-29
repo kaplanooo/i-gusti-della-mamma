@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { SectionHeading } from "@/components/SectionHeading";
 import { restaurant } from "@/data/restaurant";
 
@@ -28,7 +28,16 @@ export default function AboutPage() {
   return (
     <>
       <section className="relative">
-        <PlaceholderImage className="h-64 w-full" />
+        <div className="relative h-64 w-full">
+          <Image
+            src="/images/interior-salle.jpg"
+            alt="La salle du restaurant I Gusti Della Mamma"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
         <div className="absolute inset-0 flex items-center justify-center bg-charcoal/40">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cream/80">
@@ -73,7 +82,15 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="grid items-center gap-12 md:grid-cols-2">
-          <PlaceholderImage label="Photo à venir" className="h-72 rounded-2xl" />
+          <div className="relative h-72 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/about-filet.jpg"
+              alt="Filet de bœuf grillé dressé avec purée maison"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
           <div>
             <h2 className="font-display text-3xl font-semibold text-forest">
               Une expérience à vivre, à toute heure

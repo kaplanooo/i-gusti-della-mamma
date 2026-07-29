@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Clock, MapPin, Phone, Star } from "lucide-react";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { SectionHeading } from "@/components/SectionHeading";
 import { HoursTable } from "@/components/HoursTable";
 import { restaurant } from "@/data/restaurant";
@@ -17,8 +17,17 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <PlaceholderImage className="h-[70vh] min-h-[480px] w-full" />
-        <div className="absolute inset-0 flex items-center bg-charcoal/30">
+        <div className="relative h-[70vh] min-h-[480px] w-full">
+          <Image
+            src="/images/hero-pizza.jpg"
+            alt="Pizza cuite au feu de bois et verres de vin rouge chez I Gusti Della Mamma"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+        <div className="absolute inset-0 flex items-center bg-charcoal/40">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cream/80">
               {restaurant.cuisine} · {restaurant.address.city}
@@ -50,7 +59,15 @@ export default function Home() {
       {/* About teaser */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="grid items-center gap-12 md:grid-cols-2">
-          <PlaceholderImage label="Photo à venir" className="h-80 rounded-2xl" />
+          <div className="relative h-80 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/interior-wide.jpg"
+              alt="La salle du restaurant I Gusti Della Mamma"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-terracotta">
               Notre histoire
@@ -183,6 +200,40 @@ export default function Home() {
             >
               Voir sur Google Maps
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+        <SectionHeading eyebrow="En images" title="Un aperçu de la table" />
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="relative h-72 overflow-hidden rounded-2xl sm:h-80">
+            <Image
+              src="/images/galerie-tartare.jpg"
+              alt="Entrée signature de I Gusti Della Mamma"
+              fill
+              className="object-cover"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
+          </div>
+          <div className="relative h-72 overflow-hidden rounded-2xl sm:h-80">
+            <Image
+              src="/images/galerie-risotto-asperges.jpg"
+              alt="Plat maison servi avec un verre de vin"
+              fill
+              className="object-cover"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
+          </div>
+          <div className="relative h-72 overflow-hidden rounded-2xl sm:h-80">
+            <Image
+              src="/images/interior-cozy.jpg"
+              alt="Coin cosy de la salle du restaurant"
+              fill
+              className="object-cover"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
           </div>
         </div>
       </section>

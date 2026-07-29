@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MenuList } from "@/components/MenuList";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { menu, drinksCategories } from "@/data/menu";
 import { restaurant } from "@/data/restaurant";
 
@@ -13,7 +13,16 @@ export default function MenuPage() {
   return (
     <>
       <section className="relative">
-        <PlaceholderImage className="h-64 w-full" />
+        <div className="relative h-64 w-full">
+          <Image
+            src="/images/menu-banner-risotto.jpg"
+            alt="Plat maison servi avec des asperges blanches et un verre de vin"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
         <div className="absolute inset-0 flex items-center justify-center bg-charcoal/40">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cream/80">
