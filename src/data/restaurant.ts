@@ -40,6 +40,6 @@ export const restaurant = {
 } as const;
 
 export const siteConfig = {
-  url: "https://i-gusti-della-mamma.vercel.app",
+  url: "https://igustidellamamma.fr",
   ogImage: "/images/og-cover.jpg",
 } as const;
