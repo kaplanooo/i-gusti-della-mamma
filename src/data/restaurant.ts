@@ -42,4 +42,5 @@ export const restaurant = {
 export const siteConfig = {
   url: "https://igustidellamamma.fr",
   ogImage: "/images/og-cover.jpg",
+  gaId: "G-ZNV9HWCJMJ",
 } as const;
