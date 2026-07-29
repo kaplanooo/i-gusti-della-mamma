@@ -8,6 +8,7 @@ import { restaurant } from "@/data/restaurant";
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/menu", label: "La carte" },
+  { href: "/cave-a-vins", label: "Cave à vins" },
   { href: "/a-propos", label: "À propos" },
   { href: "/contact", label: "Contact & accès" },
 ];

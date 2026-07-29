@@ -132,6 +132,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Wine cellar teaser */}
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <div className="grid items-center gap-12 md:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-terracotta">
+              Notre cave
+            </p>
+            <h2 className="mt-2 font-display text-3xl font-semibold text-forest sm:text-4xl">
+              Une cave à vins qui sort de l&apos;ordinaire
+            </h2>
+            <p className="mt-5 leading-relaxed text-charcoal/70">
+              Bourgogne, Bordeaux, vallée du Rhône et vins d&apos;Italie : nous
+              avons constitué une sélection de belles appellations que nous
+              proposons à prix justes, pour que les grands flacons se
+              partagent à table plus souvent.
+            </p>
+            <Link
+              href="/cave-a-vins"
+              className="mt-6 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-terracotta-dark"
+            >
+              Découvrir la cave à vins
+            </Link>
+          </div>
+          <div className="relative h-80 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/vins-hero.jpg"
+              alt="Sélection de grands vins de Bourgogne"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Info strip */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="grid gap-10 md:grid-cols-3">

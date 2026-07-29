@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/restaurant";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/menu", "/a-propos", "/contact"];
+  const routes = ["", "/menu", "/cave-a-vins", "/a-propos", "/contact"];
 
   return routes.map((route) => ({
     url: `${siteConfig.url}${route}`,

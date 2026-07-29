@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { MenuList } from "@/components/MenuList";
 import { menu, drinksCategories } from "@/data/menu";
 import { restaurant } from "@/data/restaurant";
@@ -61,10 +62,10 @@ export default function MenuPage() {
             Boissons &amp; vins
           </h3>
           <p className="mt-3 max-w-2xl text-cream/70">
-            Une sélection de cocktails maison, vins italiens et français,
-            bières, softs et digestifs vous est proposée sur place. La carte
-            des vins évoluant régulièrement au gré de nos arrivages, elle est
-            disponible en salle et sur simple demande.
+            Cocktails maison, bières, softs et digestifs vous sont proposés
+            sur place. Nous sommes particulièrement fiers de notre cave à
+            vins : de belles appellations de Bourgogne, Bordeaux, vallée du
+            Rhône et d&apos;Italie, à prix justes.
           </p>
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-cream/80">
             {drinksCategories.map((d) => (
@@ -73,6 +74,12 @@ export default function MenuPage() {
               </li>
             ))}
           </ul>
+          <Link
+            href="/cave-a-vins"
+            className="mt-6 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-terracotta-dark"
+          >
+            Découvrir notre cave à vins →
+          </Link>
         </div>
 
         <p className="mt-8 text-center text-xs text-charcoal/40">
