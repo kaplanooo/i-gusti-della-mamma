@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:menu.eazee-link.com)",
+      "Bash(npm -v)",
+      "Bash(xcode-select -p)",
+      "Bash(curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh)",
+      "Bash(bash)",
+      "Bash(cat)",
+      "Read(//Users/kellian/**)"
+    ]
+  }
+}
