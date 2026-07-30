@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { restaurant, siteConfig } from "@/data/restaurant";
 
 const playfair = Playfair_Display({
@@ -18,13 +19,16 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const homeTitle = `Restaurant Italien à Blaye – ${restaurant.name}`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${restaurant.name} — Restaurant italien à ${restaurant.address.city}, près de Blaye`,
+    default: homeTitle,
     template: `%s — ${restaurant.name}`,
   },
-  description: restaurant.shortDescription,
+  description:
+    "Envie d'une vraie cuisine italienne près de Blaye ? Pâtes fraîches, pizzas au feu de bois et cave à vins d'exception : réservez votre table.",
   keywords: [
     "restaurant italien",
     "Blaye",
@@ -39,7 +43,7 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: siteConfig.url,
     siteName: restaurant.name,
-    title: `${restaurant.name} — Restaurant italien près de Blaye`,
+    title: homeTitle,
     description: restaurant.shortDescription,
     images: [{ url: siteConfig.ogImage }],
   },
@@ -110,10 +114,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-cream text-charcoal">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

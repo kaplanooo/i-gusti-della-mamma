@@ -3,10 +3,18 @@ import { MapPin, Phone, Star } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { restaurant } from "@/data/restaurant";
 
+const navLinks = [
+  { href: "/", label: "Accueil" },
+  { href: "/menu", label: "La carte" },
+  { href: "/cave-a-vins", label: "Cave à vins" },
+  { href: "/a-propos", label: "À propos" },
+  { href: "/contact", label: "Contact & accès" },
+];
+
 export function Footer() {
   return (
     <footer className="border-t border-forest/10 bg-forest text-cream">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div>
           <p className="font-display text-lg font-semibold">
             {restaurant.name}
@@ -43,6 +51,22 @@ export function Footer() {
               <Star size={20} />
             </a>
           </div>
+        </div>
+
+        <div>
+          <p className="font-display text-base font-semibold">Navigation</p>
+          <ul className="mt-3 space-y-2 text-sm text-cream/70">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="transition-colors hover:text-terracotta"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div>

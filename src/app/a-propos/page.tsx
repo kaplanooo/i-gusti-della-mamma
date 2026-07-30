@@ -2,11 +2,34 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
-import { restaurant } from "@/data/restaurant";
+import { RelatedPages } from "@/components/RelatedPages";
+import { JsonLd } from "@/components/JsonLd";
+import { restaurant, siteConfig } from "@/data/restaurant";
+import { breadcrumbJsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "À propos",
-  description: `L'histoire de ${restaurant.name}, restaurant italien familial à ${restaurant.address.city}, près de Blaye.`,
+  title: "Restaurant Italien – Notre Histoire",
+  description:
+    "Une histoire de famille, une passion pour la cuisine méditerranéenne : découvrez qui se cache derrière I Gusti Della Mamma, près de Blaye.",
+  alternates: {
+    canonical: `${siteConfig.url}/a-propos`,
+  },
+};
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Accueil", path: "/" },
+  { name: "À propos", path: "/a-propos" },
+]);
+
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "À propos — " + restaurant.name,
+  url: `${siteConfig.url}/a-propos`,
+  about: {
+    "@type": "Restaurant",
+    name: restaurant.name,
+  },
 };
 
 const values = [
@@ -27,6 +50,7 @@ const values = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={[breadcrumb, aboutJsonLd]} />
       <section className="relative">
         <div className="relative h-64 w-full">
           <Image
@@ -99,7 +123,21 @@ export default function AboutPage() {
               Que ce soit pour un déjeuner rapide en terrasse, un dîner
               romantique ou un repas en famille, notre équipe vous accueille
               du mardi au samedi dans une ambiance chaleureuse et
-              authentique.
+              authentique. Retrouvez toutes nos spécialités sur{" "}
+              <Link
+                href="/menu"
+                className="font-semibold text-terracotta hover:underline"
+              >
+                notre carte
+              </Link>{" "}
+              et nos plus belles bouteilles dans{" "}
+              <Link
+                href="/cave-a-vins"
+                className="font-semibold text-terracotta hover:underline"
+              >
+                notre cave à vins
+              </Link>
+              .
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               {restaurant.services.map((s) => (
@@ -120,6 +158,29 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <RelatedPages
+        links={[
+          {
+            href: "/menu",
+            label: "Notre carte de plats",
+            description:
+              "Antipasti, pâtes fraîches, pizzas au feu de bois et desserts faits maison.",
+          },
+          {
+            href: "/cave-a-vins",
+            label: "Notre cave à vins",
+            description:
+              "Bourgogne, Bordeaux, vallée du Rhône : une sélection à prix justes.",
+          },
+          {
+            href: "/contact",
+            label: "Nous trouver",
+            description:
+              "Adresse, horaires et téléphone pour venir nous rendre visite.",
+          },
+        ]}
+      />
     </>
   );
 }

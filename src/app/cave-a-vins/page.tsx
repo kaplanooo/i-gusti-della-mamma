@@ -1,16 +1,53 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { wineCategories } from "@/data/wines";
-import { restaurant } from "@/data/restaurant";
+import { restaurant, siteConfig } from "@/data/restaurant";
+import { breadcrumbJsonLd, parsePrice } from "@/lib/schema";
+import { JsonLd } from "@/components/JsonLd";
+import { RelatedPages } from "@/components/RelatedPages";
+
+const year = new Date().getFullYear();
 
 export const metadata: Metadata = {
-  title: "Cave à vins",
-  description: `La cave à vins de ${restaurant.name} : une sélection de Bourgogne, Bordeaux, vallée du Rhône et vins d'Italie, à prix justes.`,
+  title: `Cave à Vins ${year}`,
+  description:
+    "Bourgogne, Bordeaux, vallée du Rhône, vins d'Italie... Découvrez notre cave à vins à prix justes et trouvez l'accord parfait pour votre repas.",
+  alternates: {
+    canonical: `${siteConfig.url}/cave-a-vins`,
+  },
 };
+
+const winesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  name: `Cave à vins — ${restaurant.name}`,
+  hasMenuSection: wineCategories.map((category) => ({
+    "@type": "MenuSection",
+    name: category.title,
+    hasMenuItem: category.wines.map((wine) => ({
+      "@type": "MenuItem",
+      name: wine.name,
+      description: [wine.producer, wine.description]
+        .filter(Boolean)
+        .join(" — "),
+      offers: {
+        "@type": "Offer",
+        price: parsePrice(wine.price),
+        priceCurrency: "EUR",
+      },
+    })),
+  })),
+};
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Accueil", path: "/" },
+  { name: "Cave à vins", path: "/cave-a-vins" },
+]);
 
 export default function WinesPage() {
   return (
     <>
+      <JsonLd data={[breadcrumb, winesJsonLd]} />
       <section className="relative">
         <div className="relative h-72 w-full">
           <Image
@@ -137,6 +174,29 @@ export default function WinesPage() {
           d&apos;évoluer selon nos arrivages.
         </p>
       </section>
+
+      <RelatedPages
+        links={[
+          {
+            href: "/menu",
+            label: "Notre carte de plats",
+            description:
+              "Pâtes fraîches, pizzas au feu de bois et viandes grillées à accorder avec nos vins.",
+          },
+          {
+            href: "/a-propos",
+            label: "Notre histoire",
+            description:
+              "La passion d'une famille pour la cuisine méditerranéenne et les belles appellations.",
+          },
+          {
+            href: "/contact",
+            label: "Réserver une table",
+            description:
+              "Adresse, horaires et téléphone pour venir déguster notre sélection à Saint-Martin-Lacaussade.",
+          },
+        ]}
+      />
     </>
   );
 }

@@ -2,17 +2,61 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuList } from "@/components/MenuList";
+import { JsonLd } from "@/components/JsonLd";
+import { RelatedPages } from "@/components/RelatedPages";
 import { menu, drinksCategories } from "@/data/menu";
-import { restaurant } from "@/data/restaurant";
+import { restaurant, siteConfig } from "@/data/restaurant";
+import { breadcrumbJsonLd, parsePrice } from "@/lib/schema";
+
+const year = new Date().getFullYear();
 
 export const metadata: Metadata = {
-  title: "La carte",
-  description: `Découvrez la carte complète de ${restaurant.name} : antipasti, pâtes fraîches, pizzas au feu, viandes, poissons et desserts maison.`,
+  title: `Carte & Menu ${year}`,
+  description:
+    "Antipasti, pâtes fraîches, pizzas au feu, viandes et desserts maison : découvrez toute la carte et réservez votre table dès aujourd'hui.",
+  alternates: {
+    canonical: `${siteConfig.url}/menu`,
+  },
 };
+
+const menuJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  name: `Carte — ${restaurant.name}`,
+  hasMenuSection: menu.map((category) => ({
+    "@type": "MenuSection",
+    name: category.title,
+    hasMenuItem: category.items.map((item) => ({
+      "@type": "MenuItem",
+      name: item.name,
+      description: item.description,
+      offers: item.variants
+        ? item.variants.map((v) => ({
+            "@type": "Offer",
+            name: v.label,
+            price: parsePrice(v.price),
+            priceCurrency: "EUR",
+          }))
+        : item.price
+          ? {
+              "@type": "Offer",
+              price: parsePrice(item.price),
+              priceCurrency: "EUR",
+            }
+          : undefined,
+    })),
+  })),
+};
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Accueil", path: "/" },
+  { name: "Carte & Menu", path: "/menu" },
+]);
 
 export default function MenuPage() {
   return (
     <>
+      <JsonLd data={[breadcrumb, menuJsonLd]} />
       <section className="relative">
         <div className="relative h-64 w-full">
           <Image
@@ -88,6 +132,29 @@ export default function MenuPage() {
           disponible sur demande.
         </p>
       </section>
+
+      <RelatedPages
+        links={[
+          {
+            href: "/cave-a-vins",
+            label: "Notre cave à vins",
+            description:
+              "Bourgogne, Bordeaux, vallée du Rhône : trouvez l'accord parfait avec votre plat.",
+          },
+          {
+            href: "/a-propos",
+            label: "Notre histoire",
+            description:
+              "Découvrez le projet familial derrière la cuisine faite maison d'I Gusti Della Mamma.",
+          },
+          {
+            href: "/contact",
+            label: "Réserver une table",
+            description:
+              "Adresse, horaires et téléphone pour venir déguster notre carte à Saint-Martin-Lacaussade.",
+          },
+        ]}
+      />
     </>
   );
 }

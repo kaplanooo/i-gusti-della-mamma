@@ -1,18 +1,39 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Mail, MapPin, Phone, Star } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { HoursTable } from "@/components/HoursTable";
 import { MapEmbed } from "@/components/MapEmbed";
-import { restaurant } from "@/data/restaurant";
+import { JsonLd } from "@/components/JsonLd";
+import { RelatedPages } from "@/components/RelatedPages";
+import { restaurant, siteConfig } from "@/data/restaurant";
+import { breadcrumbJsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Contact & accès",
-  description: `Adresse, horaires, téléphone et itinéraire pour rejoindre ${restaurant.name} à ${restaurant.address.city}, près de Blaye.`,
+  title: "Restaurant Italien Blaye – Contact",
+  description:
+    "Adresse, horaires et itinéraire pour rejoindre I Gusti Della Mamma près de Blaye. Réservation conseillée : appelez-nous dès maintenant.",
+  alternates: {
+    canonical: `${siteConfig.url}/contact`,
+  },
+};
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Accueil", path: "/" },
+  { name: "Contact & accès", path: "/contact" },
+]);
+
+const contactJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Contact — " + restaurant.name,
+  url: `${siteConfig.url}/contact`,
 };
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={[breadcrumb, contactJsonLd]} />
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-terracotta">
           Contact &amp; accès
@@ -51,7 +72,14 @@ export default function ContactPage() {
                 {restaurant.phoneDisplay}
               </a>
               <p className="mt-1 text-sm text-charcoal/50">
-                Réservation conseillée.
+                Réservation conseillée — jetez un œil à{" "}
+                <Link
+                  href="/menu"
+                  className="font-semibold text-terracotta hover:underline"
+                >
+                  notre carte
+                </Link>{" "}
+                avant de nous appeler.
               </p>
             </div>
 
@@ -99,6 +127,29 @@ export default function ContactPage() {
           <MapEmbed className="h-full min-h-[420px] w-full rounded-2xl border border-forest/10" />
         </div>
       </section>
+
+      <RelatedPages
+        links={[
+          {
+            href: "/menu",
+            label: "Notre carte de plats",
+            description:
+              "Antipasti, pâtes fraîches, pizzas au feu de bois et desserts faits maison.",
+          },
+          {
+            href: "/cave-a-vins",
+            label: "Notre cave à vins",
+            description:
+              "Bourgogne, Bordeaux, vallée du Rhône : une sélection à prix justes.",
+          },
+          {
+            href: "/a-propos",
+            label: "Notre histoire",
+            description:
+              "Le projet familial derrière la cuisine faite maison d'I Gusti Della Mamma.",
+          },
+        ]}
+      />
     </>
   );
 }
